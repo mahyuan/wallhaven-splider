@@ -1,0 +1,20 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true,
+        "commonjs": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2015
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent":["warn", 2],
+        "semi": "warn",
+        // "no-irregular-whitespace": "warn"
+        "no-multi-spaces": 2
+    }
+}

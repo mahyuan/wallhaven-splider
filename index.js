@@ -8,7 +8,6 @@ const MongodbClient = require('./mongo');
 // require('./loadenv')();
 
 
-
 class Spider {
   constructor({ url = ''}) {
     this.url = url;
@@ -24,10 +23,14 @@ class Spider {
 
     this.Event.on('ended', () => {
       console.log('process exit.....');
+      this.disconnect();
       process.exit(1);
     });
   }
-
+  async disconnect() {
+    let res = await this.db.close();
+    console.log('disconnect', res);
+  }
   init() {
     console.log('start load html', this.url);
     this.loadHtml(this.url, this.parseHtml);
@@ -87,7 +90,7 @@ class Spider {
         id,
         tag: this.tag,
         thumb,
-        like,
+        like: Number(like) || 0,
         preview,
         width,
         height,

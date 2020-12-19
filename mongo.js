@@ -5,13 +5,23 @@ const Schema = mongoose.Schema;
 class MongoDb {
   constructor() {
     require('./loadenv')();
+
+    this.db = null;
+    this.Thumb = null;
+    this.getConnection();
+    this.initModel();
+  }
+  async getConnection() {
     // 'mongodb://{user}:{password}@{host}:{port}/{dbname}'
     // 'mongodb://localhost:27017/wallhaven'
     const url = this.getDBUrl();
     const options = { useNewUrlParser: true , useUnifiedTopology: true};
-    this.db = mongoose.connect(url, options);
-    this.Thumb = null;
-    this.initModel();
+    this.db = await mongoose.connect(url, options);
+  }
+  async close() {
+    if(this.db !== null) {
+      await this.db.disconnect();
+    }
   }
   getDBUrl() {
     const isAuth = process.env.DB_AUTH;

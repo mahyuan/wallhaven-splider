@@ -25,6 +25,7 @@ class CleanTarget {
 
     if(count) {
       this.count = count;
+      console.log('count', count);
       this.loop();
     }
   }
@@ -33,27 +34,38 @@ class CleanTarget {
    */
   async loop() {
     // 7896
-    const limit = 10;
+    const limit = 100;
     const len = Math.ceil(this.count / limit);
     const arr = Array.from(new Array(len), (a,i) => i);
-
+    // console.log('arr.length',arr.length);
     for(let i of arr) {
+      if(i <= 621) {
+        continue;
+      }
       let skip = parseInt(i) * limit;
 
-      let result = await this.Thumb.find({}, null, {skip, limit: 1000});
-      console.log('----range---', i);
-      await this.handler(result);
+      console.log(`--range--${i}/${len}---`);
+
+      await this.handler({skip, limit});
     }
+    this.disconnect();
   }
 
-  async handler(data) {
+  async disconnect() {
+    let res = await this.db.close();
+    console.log('disconnect', res);
+  }
+
+  async handler({skip, limit}) {
+    let data = await this.Thumb.find({}, null, {skip, limit});
+    // console.log('data.length', data.length);
     if(Array.isArray(data)) {
       for (const item of data) {
         const id = item.id;
         const fullThumb = `https://w.wallhaven.cc/full/${id.slice(0,2)}/wallhaven-${id}.jpg`;
 
         let result = await this.Thumb.updateOne({'id': item.id}, { $set: {'fullThumb': fullThumb }});
-        console.log('result--', result);
+        // console.log('result--');
       }
     }
   }

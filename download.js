@@ -105,7 +105,7 @@ function parseFullThumb(html) {
 }
 
 function updateHandler(data) {
-  console.log('---updatehandler---', data);
+  console.log('---update handler---', data);
   client.Thumb
     .updateOne({id: { $eq: data.id }}, { full: data.full })
     .exec((err, result) => {

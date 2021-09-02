@@ -6,7 +6,7 @@ class MongoDb {
   constructor() {
     require('./loadenv')();
 
-    this.db = null;
+    this.connection = null;
     this.Thumb = null;
     this.getConnection();
     this.initModel();
@@ -16,11 +16,11 @@ class MongoDb {
     // 'mongodb://localhost:27017/wallhaven'
     const url = this.getDBUrl();
     const options = { useNewUrlParser: true , useUnifiedTopology: true};
-    this.db = await mongoose.connect(url, options);
+    this.connection = await mongoose.connect(url, options);
   }
   async close() {
-    if(this.db !== null) {
-      await this.db.disconnect();
+    if(this.connection !== null) {
+      await this.connection.disconnect();
     }
   }
   getDBUrl() {
@@ -79,6 +79,10 @@ class MongoDb {
 
   async remove(filter) {
     return await this.Thumb.remove(filter);
+  }
+
+  async countDocuments(filter) {
+    return await this.Thumb.countDocuments(filter).exec();
   }
 }
 

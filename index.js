@@ -162,8 +162,8 @@ class Spider {
   }
 }
 
-const url = "https://wallhaven.cc/hot?page=1";
-// const url = `https://wallhaven.cc/latest?page=1`;
+// const url = "https://wallhaven.cc/hot?page=1";
+const url = `https://wallhaven.cc/latest?page=1`;
 // const url = 'https://wallhaven.cc/toplist?page=1';
 
 const spider = new Spider({url});

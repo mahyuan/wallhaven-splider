@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "download": "node ./download2.js",
     "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,10 +15,14 @@
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
     "mongoose": "^5.10.3",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.15.0"
+    "chalk": "^4.1.2",
+    "eslint": "^7.15.0",
+    "inquirer": "^8.1.2",
+    "ora": "^4.0.0"
   }
 }
